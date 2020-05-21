@@ -9,12 +9,12 @@ import java.nio.charset.Charset;
 
 public class xuanze {
     public static void main(String[] args) throws IOException {
-        File file = new File("F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs66.csv");
+        File file = new File("F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs11.csv");
         InputStream in = new FileInputStream(file);
         CsvReader cr = new CsvReader(in, Charset.forName("utf-8"));
         // 读表头
 //        cr.readHeaders();
-        String file2 = "F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\job6.csv";
+        String file2 = "F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\job1.txt";
         // 创建CSV写对象
         CsvWriter cs = new CsvWriter(file2,',', Charset.forName("utf-8"));
         while(cr.readRecord()) {
