@@ -6,15 +6,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class test01 {
+public class test06 {
     public static void main(String[] args) throws IOException {
-        File file = new File("F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs1.csv");
+        File file = new File("F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs6.csv");
         InputStream in = new FileInputStream(file);
         CsvReader cr = new CsvReader(in, Charset.forName("utf-8"));
         // 读表头
-//       cr.readHeaders();
-        String file2 = "F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs11.csv";
+        cr.readHeaders();
+        String file2 = "F:\\spark-数据清洗-数据仓库\\计嵌2班-Spark-数据清洗-数据仓库\\任务\\jobs66.csv";
         // 创建CSV写对象
         CsvWriter cs = new CsvWriter(file2,',', Charset.forName("utf-8"));
         while(cr.readRecord()) {
@@ -27,17 +29,21 @@ public class test01 {
             for (int i = 0; i <columnCount; i++) {
                 if(i==11){
                     String str = cr.get(i);
-                    str = str.replaceAll("k", "");//小写
-                    str = str.replaceAll("K", "");//大写
+                    str = str.replaceAll("面议","20000-20000");
+/*                    str = str.replaceAll("k","");
+                    str = str.replaceAll("K","");
+                    str = str.replaceAll("以上", "-20");*/
 
                     String[] n = str.split("-");
                     float n0 = Float.parseFloat(n[0]);
                     float n1 = Float.parseFloat(n[1]);
-                    float salary = (n0 + n1) / 2;
+                    float salary = (n0 + n1)/1000 / 2;
                     s[i] = String.valueOf((int)salary);
                 }else {
                     String str = cr.get(i);
-                    s[i] = str;
+                    Pattern p = Pattern.compile("\\s+|\t+|\n\r");
+                    Matcher m = p.matcher(str);
+                    s[i] = m.replaceAll("");
                 }
             }
             cs.writeRecord(s);
